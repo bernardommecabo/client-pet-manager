@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: petz-be-challenge
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+     hibernate:
+       format_sql: true
