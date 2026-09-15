@@ -1,3 +1,7 @@
+server:
+  servlet:
+    context-path: /client-pet/api
+
 spring:
   application:
     name: petz-be-challenge
