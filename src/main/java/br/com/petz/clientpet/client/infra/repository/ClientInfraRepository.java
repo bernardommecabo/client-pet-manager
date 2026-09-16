@@ -2,8 +2,10 @@ package br.com.petz.clientpet.client.infra.repository;
 
 import br.com.petz.clientpet.client.domain.ClientEntity;
 import br.com.petz.clientpet.client.domain.repository.ClientRepository;
+import br.com.petz.clientpet.handlers.exceptions.APIException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -34,7 +36,8 @@ public class ClientInfraRepository implements ClientRepository {
     @Override
     public ClientEntity findClient(UUID clientId) {
         log.info("[start] ClientRepository - findClient");
-        ClientEntity client = repository.findById(clientId).orElse(null);
+        ClientEntity client = repository.findById(clientId)
+                .orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND,"Client Not Found"));
         log.info("[finish] ClientRepository - findClient");
         return client;
     }
