@@ -30,6 +30,7 @@ public class ClientEntity {
 
     @NotBlank
     @Email
+    @Column(unique = true)
     private String email;
 
     @NotBlank
@@ -44,6 +45,7 @@ public class ClientEntity {
     private LocalDate birthDate;
 
     @CPF
+    @Column(unique = true)
     private String cpf;
 
     @NotNull
