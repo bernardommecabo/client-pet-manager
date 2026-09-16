@@ -2,7 +2,7 @@ package br.com.petz.clientpet.client.application.DTOs.responses;
 
 import br.com.petz.clientpet.client.domain.Gender;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record ClientInfoResponse(
@@ -13,6 +13,6 @@ public record ClientInfoResponse(
         String mobilePhoneNumber,
         Gender gender,
         Boolean agreesOnTermsAndConditions,
-        LocalDate createdAt
+        LocalDateTime createdAt
 ) {
 }
