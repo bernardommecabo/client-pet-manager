@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 @Entity
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "clients")
 public class ClientEntity {
@@ -34,6 +36,8 @@ public class ClientEntity {
     private String mobilePhoneNumber;
 
     private String homePhoneNumber;
+
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     @NotNull

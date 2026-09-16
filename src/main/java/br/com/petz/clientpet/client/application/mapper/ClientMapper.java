@@ -5,7 +5,7 @@ import br.com.petz.clientpet.client.application.DTOs.ClientResponse;
 import br.com.petz.clientpet.client.domain.ClientEntity;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ClientMapper {
     ClientEntity toEntity(ClientRequest clientRequest);
     ClientResponse toResponse(ClientEntity clientEntity);
