@@ -1,4 +1,4 @@
-package br.com.petz.clientpet.client.application.DTOs;
+package br.com.petz.clientpet.client.application.DTOs.requests;
 
 import br.com.petz.clientpet.client.domain.Gender;
 import jakarta.validation.constraints.Email;

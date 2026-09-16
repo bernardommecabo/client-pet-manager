@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -28,5 +29,13 @@ public class ClientInfraRepository implements ClientRepository {
         List<ClientEntity> clientsList = repository.findAll();
         log.info("[finish] ClientRepository - findAllClients");
         return clientsList;
+    }
+
+    @Override
+    public ClientEntity findClient(UUID clientId) {
+        log.info("[start] ClientRepository - findClient");
+        ClientEntity client = repository.findById(clientId).orElse(null);
+        log.info("[finish] ClientRepository - findClient");
+        return client;
     }
 }
