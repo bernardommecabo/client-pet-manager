@@ -29,9 +29,9 @@ public class ClientApplicationService implements ClientService {
 
     @Override
     public List<ClientListResponse> getAllClients() {
-        log.info("[start] ClientController - getAllClients");
+        log.info("[start] ClientService - getClientsList");
         List<ClientEntity> clients = clientRepository.findAllClients();
-        log.info("[finish] ClientController - getAllClients");
+        log.info("[finish] ClientService - getClientsList");
         return clients.stream()
                 .map(clientMapper::toListResponse)
                 .toList();
