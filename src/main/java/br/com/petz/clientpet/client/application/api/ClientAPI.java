@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public interface ClientAPI {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    ClientResponse createClient(@RequestBody @Valid ClientRequest request);
+    ClientResponse postClient(@RequestBody @Valid ClientRequest request);
 
 
 }
