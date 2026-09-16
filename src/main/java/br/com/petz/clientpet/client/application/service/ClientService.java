@@ -12,4 +12,5 @@ public interface ClientService {
     ClientResponse createClient(ClientRequest request);
     List<ClientListResponse> getAllClients();
     ClientInfoResponse getClientInfo(UUID clientId);
+    void deleteClientEntity(UUID clientId);
 }

@@ -41,4 +41,11 @@ public class ClientInfraRepository implements ClientRepository {
         log.info("[finish] ClientRepository - findClient");
         return client;
     }
+
+    @Override
+    public void deleteClient(UUID clientId) {
+        log.info("[start] ClientRepository - deleteClient");
+        repository.deleteById(clientId);
+        log.info("[finish] ClientRepository - deleteClient");
+    }
 }

@@ -46,4 +46,12 @@ public class ClientApplicationService implements ClientService {
                 .map(clientMapper::toListResponse)
                 .toList();
     }
+
+    @Override
+    public void deleteClientEntity(UUID clientId) {
+        log.info("[start] ClientService - deleteClientEntity");
+        ClientEntity client = clientRepository.findClient(clientId);
+        clientRepository.deleteClient(client.getClientId());
+        log.info("[finish] ClientService - deleteClientEntity");
+    }
 }

@@ -9,4 +9,5 @@ public interface ClientRepository {
     ClientEntity saveClient(ClientEntity client);
     List<ClientEntity> findAllClients();
     ClientEntity findClient(UUID clientId);
+    void deleteClient(UUID clientId);
 }
