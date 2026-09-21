@@ -3,10 +3,7 @@ package br.com.petz.clientpet.pet.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,6 +12,7 @@ import java.util.UUID;
 
 @Entity
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "pets")
@@ -23,6 +21,9 @@ public class PetEntity {
     @GeneratedValue
     @Column(columnDefinition = "uuid", nullable = false, updatable = false)
     private UUID petId;
+
+    @Column(name = "clientId", nullable = false, updatable = false)
+    private UUID clientId;
 
     @NotBlank
     private String petName;
@@ -34,6 +35,7 @@ public class PetEntity {
     @Enumerated(EnumType.STRING)
     private PetType petType;
 
+    @Column(updatable = false)
     private String microchipNumber;
 
     @NotBlank
