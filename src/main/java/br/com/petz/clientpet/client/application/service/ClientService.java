@@ -1,5 +1,6 @@
 package br.com.petz.clientpet.client.application.service;
 
+import br.com.petz.clientpet.client.application.DTOs.requests.ClientUpdateRequest;
 import br.com.petz.clientpet.client.application.DTOs.responses.ClientInfoResponse;
 import br.com.petz.clientpet.client.application.DTOs.responses.ClientListResponse;
 import br.com.petz.clientpet.client.application.DTOs.requests.ClientRequest;
@@ -12,4 +13,6 @@ public interface ClientService {
     ClientResponse createClient(ClientRequest request);
     List<ClientListResponse> getAllClients();
     ClientInfoResponse getClientInfo(UUID clientId);
+    void updateClient(UUID clientId, ClientUpdateRequest request);
+    void deleteClientEntity(UUID clientId);
 }

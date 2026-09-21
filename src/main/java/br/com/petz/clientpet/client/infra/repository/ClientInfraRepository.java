@@ -5,6 +5,7 @@ import br.com.petz.clientpet.client.domain.repository.ClientRepository;
 import br.com.petz.clientpet.handlers.exceptions.APIException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
@@ -20,9 +21,13 @@ public class ClientInfraRepository implements ClientRepository {
     @Override
     public ClientEntity saveClient(ClientEntity client) {
         log.info("[start] ClientRepository - saveClient");
-        ClientEntity savedClient = repository.save(client);
+        try{
+            repository.save(client);
+        } catch (DataIntegrityViolationException exception) {
+            throw APIException.build(HttpStatus.CONFLICT, "Client already exists");
+        }
         log.info("[finish] ClientRepository - saveClient");
-        return savedClient;
+        return client;
     }
 
     @Override
@@ -40,5 +45,12 @@ public class ClientInfraRepository implements ClientRepository {
                 .orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND,"Client Not Found"));
         log.info("[finish] ClientRepository - findClient");
         return client;
+    }
+
+    @Override
+    public void deleteClient(UUID clientId) {
+        log.info("[start] ClientRepository - deleteClient");
+        repository.deleteById(clientId);
+        log.info("[finish] ClientRepository - deleteClient");
     }
 }

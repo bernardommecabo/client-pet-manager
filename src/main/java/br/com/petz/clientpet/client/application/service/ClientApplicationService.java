@@ -1,5 +1,6 @@
 package br.com.petz.clientpet.client.application.service;
 
+import br.com.petz.clientpet.client.application.DTOs.requests.ClientUpdateRequest;
 import br.com.petz.clientpet.client.application.DTOs.responses.ClientInfoResponse;
 import br.com.petz.clientpet.client.application.DTOs.responses.ClientListResponse;
 import br.com.petz.clientpet.client.application.DTOs.requests.ClientRequest;
@@ -45,5 +46,22 @@ public class ClientApplicationService implements ClientService {
         return clients.stream()
                 .map(clientMapper::toListResponse)
                 .toList();
+    }
+
+    @Override
+    public void updateClient(UUID clientId, ClientUpdateRequest request) {
+        log.info("[start] ClientService - updateClient");
+        ClientEntity client = clientRepository.findClient(clientId);
+        clientMapper.updateEntityFromRequest(request, client);
+        clientRepository.saveClient(client);
+        log.info("[finish] ClientService - updateClient");
+    }
+
+    @Override
+    public void deleteClientEntity(UUID clientId) {
+        log.info("[start] ClientService - deleteClientEntity");
+        ClientEntity client = clientRepository.findClient(clientId);
+        clientRepository.deleteClient(client.getClientId());
+        log.info("[finish] ClientService - deleteClientEntity");
     }
 }

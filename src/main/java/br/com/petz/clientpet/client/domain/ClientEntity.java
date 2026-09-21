@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
@@ -26,27 +23,35 @@ public class ClientEntity {
     private UUID clientId;
 
     @NotBlank
+    @Setter
     private String fullName;
 
     @NotBlank
     @Email
+    @Column(unique = true)
     private String email;
 
     @NotBlank
+    @Setter
     private String mobilePhoneNumber;
 
+    @Setter
     private String homePhoneNumber;
 
     @Enumerated(EnumType.STRING)
+    @Setter
     private Gender gender;
 
     @NotNull
+    @Setter
     private LocalDate birthDate;
 
     @CPF
+    @Column(unique = true)
     private String cpf;
 
     @NotNull
+    @Setter
     private Boolean agreesOnTermsAndConditions;
 
     private LocalDateTime createdAt;

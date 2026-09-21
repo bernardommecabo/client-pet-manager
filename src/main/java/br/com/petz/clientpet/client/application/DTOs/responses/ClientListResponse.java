@@ -7,6 +7,7 @@ public record ClientListResponse(
         String fullName,
         String email,
         String cpf,
-        String mobilePhoneNumber
+        String mobilePhoneNumber,
+        String homePhoneNumber
 ) {
 }

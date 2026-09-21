@@ -11,6 +11,7 @@ public record ClientInfoResponse(
         String email,
         String cpf,
         String mobilePhoneNumber,
+        String homePhoneNumber,
         Gender gender,
         Boolean agreesOnTermsAndConditions,
         LocalDateTime createdAt

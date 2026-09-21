@@ -1,5 +1,6 @@
 package br.com.petz.clientpet.client.application.api;
 
+import br.com.petz.clientpet.client.application.DTOs.requests.ClientUpdateRequest;
 import br.com.petz.clientpet.client.application.DTOs.responses.ClientInfoResponse;
 import br.com.petz.clientpet.client.application.DTOs.responses.ClientListResponse;
 import br.com.petz.clientpet.client.application.DTOs.requests.ClientRequest;
@@ -40,5 +41,19 @@ public class ClientController implements ClientAPI {
         List<ClientListResponse> responses = clientService.getAllClients();
         log.info("[finish] ClientController - getAllClients");
         return responses;
+    }
+
+    @Override
+    public void patchUpdateClient(UUID clientId, ClientUpdateRequest request) {
+        log.info("[start] ClientController - patchUpdateClient");
+        clientService.updateClient(clientId,request);
+        log.info("[finish] ClientController - patchUpdateClient");
+    }
+
+    @Override
+    public void deleteClient(UUID clientId) {
+        log.info("[start] ClientController - deleteClient");
+        clientService.deleteClientEntity(clientId);
+        log.info("[finish] ClientController - deleteClient");
     }
 }
