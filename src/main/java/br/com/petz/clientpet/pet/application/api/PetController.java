@@ -17,9 +17,9 @@ public class PetController implements PetAPI {
 
     @Override
     public PetResponse postPet(UUID clientId, PetRequest request) {
-        log.info("[start] ClientController - postPet");
-        PetResponse response = petService.createPet(request);
-        log.info("[finish] ClientController - postPet");
+        log.info("[start] PetController - postPet");
+        PetResponse response = petService.createPet(clientId,request);
+        log.info("[finish] PetController - postPet");
         return response;
     }
 }
