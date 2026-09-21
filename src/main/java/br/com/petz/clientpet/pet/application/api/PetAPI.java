@@ -1,11 +1,13 @@
 package br.com.petz.clientpet.pet.application.api;
 
+import br.com.petz.clientpet.pet.application.DTOs.PetListResponse;
 import br.com.petz.clientpet.pet.application.DTOs.requests.PetRequest;
 import br.com.petz.clientpet.pet.application.DTOs.responses.PetResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -14,4 +16,8 @@ public interface PetAPI {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     PetResponse postPet(@PathVariable UUID clientId, @Valid @RequestBody PetRequest request);
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    List<PetListResponse> getPetsListFromClientId(@PathVariable UUID clientId);
 }

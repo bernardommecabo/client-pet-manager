@@ -9,6 +9,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.UUID;
+
 @Repository
 @RequiredArgsConstructor
 @Log4j2
@@ -25,5 +28,13 @@ public class PetInfraRepository implements PetRepository {
         }
         log.info("[finish] PetRepository - savePet");
         return pet;
+    }
+
+    @Override
+    public List<PetEntity> findAll(UUID clientId) {
+        log.info("[start] PetRepository - findAll");
+        List<PetEntity> pets = repository.findAllByClientId(clientId);
+        log.info("[finish] PetRepository - findAll");
+        return pets;
     }
 }

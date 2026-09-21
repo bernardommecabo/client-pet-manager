@@ -1,5 +1,6 @@
 package br.com.petz.clientpet.pet.application.api;
 
+import br.com.petz.clientpet.pet.application.DTOs.PetListResponse;
 import br.com.petz.clientpet.pet.application.DTOs.requests.PetRequest;
 import br.com.petz.clientpet.pet.application.DTOs.responses.PetResponse;
 import br.com.petz.clientpet.pet.application.service.PetService;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,5 +23,13 @@ public class PetController implements PetAPI {
         PetResponse response = petService.createPet(clientId,request);
         log.info("[finish] PetController - postPet");
         return response;
+    }
+
+    @Override
+    public List<PetListResponse> getPetsListFromClientId(UUID clientId) {
+        log.info("[start] PetController - getPetsListFromClientId");
+        List<PetListResponse> responses = petService.findAllPetsFromClient(clientId);
+        log.info("[finish] PetController - getPetsListFromClientId");
+        return responses;
     }
 }
