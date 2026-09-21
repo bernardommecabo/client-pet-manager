@@ -1,5 +1,6 @@
 package br.com.petz.clientpet.client.application.api;
 
+import br.com.petz.clientpet.client.application.DTOs.requests.ClientUpdateRequest;
 import br.com.petz.clientpet.client.application.DTOs.responses.ClientInfoResponse;
 import br.com.petz.clientpet.client.application.DTOs.responses.ClientListResponse;
 import br.com.petz.clientpet.client.application.DTOs.requests.ClientRequest;
@@ -27,6 +28,10 @@ public interface ClientAPI {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     List<ClientListResponse> getAllClients();
+
+    @PatchMapping("/{clientId}")
+    @ResponseStatus(HttpStatus.OK)
+    void patchUpdateClient(@PathVariable UUID clientId, @Valid @RequestBody ClientUpdateRequest request);
 
     @DeleteMapping("/{clientId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
