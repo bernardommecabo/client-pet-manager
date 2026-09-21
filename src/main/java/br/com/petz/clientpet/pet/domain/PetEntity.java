@@ -30,7 +30,7 @@ public class PetEntity {
     @Enumerated(EnumType.STRING)
     private Size size;
 
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
     private PetType petType;
 
@@ -39,7 +39,8 @@ public class PetEntity {
     @NotBlank
     private String breed;
 
-    @NotBlank
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private PetGender gender;
 
     private String furColor;
