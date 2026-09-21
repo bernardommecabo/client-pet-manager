@@ -1,6 +1,7 @@
 package br.com.petz.clientpet.pet.application.service;
 
 import br.com.petz.clientpet.client.domain.repository.ClientRepository;
+import br.com.petz.clientpet.pet.application.DTOs.PetListResponse;
 import br.com.petz.clientpet.pet.application.DTOs.responses.PetResponse;
 import br.com.petz.clientpet.pet.application.DTOs.requests.PetRequest;
 import br.com.petz.clientpet.pet.application.mapper.PetMapper;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -24,9 +26,22 @@ public class PetApplicationService implements PetService {
     public PetResponse createPet(UUID clientId, PetRequest request) {
         log.info("[start] PetApplicationService - createPet");
         clientRepository.findClient(clientId);
+
         PetEntity pet = petMapper.toEntity(request,clientId);
         PetEntity savedPet = petRepository.savePet(pet);
+
         log.info("[finish] PetApplicationService - createPet");
         return petMapper.toResponse(savedPet);
+    }
+
+    @Override
+    public List<PetListResponse> findAllPetsFromClient(UUID clientId) {
+        log.info("[start] PetApplicationService - findAllPetsFromClient");
+        clientRepository.findClient(clientId);
+        List<PetEntity> pets = petRepository.findAll(clientId);
+        log.info("[finish] PetApplicationService - findAllPetsFromClient");
+        return pets.stream()
+                .map(petMapper::toListResponse)
+                .toList();
     }
 }
