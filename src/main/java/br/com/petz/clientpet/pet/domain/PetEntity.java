@@ -26,31 +26,41 @@ public class PetEntity {
     private UUID clientId;
 
     @NotBlank
+    @Setter
     private String petName;
 
     @Enumerated(EnumType.STRING)
+    @Setter
     private Size size;
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Setter
     private PetType petType;
 
     @Column(updatable = false)
+    @Setter
     private String microchipNumber;
 
     @NotBlank
+    @Setter
     private String breed;
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Setter
     private PetGender gender;
 
+    @Setter
     private String furColor;
 
     @NotNull
+    @Setter
     private LocalDate birthDate;
 
+    @Setter
     private String RGA;
+    @Setter
     private BigDecimal weight;
 
     private LocalDateTime createdAt;

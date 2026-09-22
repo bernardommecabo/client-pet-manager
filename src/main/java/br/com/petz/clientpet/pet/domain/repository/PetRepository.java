@@ -8,4 +8,7 @@ import java.util.UUID;
 public interface PetRepository {
     PetEntity savePet(PetEntity pet);
     List<PetEntity> findAll(UUID clientId);
+    PetEntity findPet(UUID petId);
+    void deletePet(UUID petId);
+
 }
