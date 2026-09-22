@@ -37,4 +37,20 @@ public class PetInfraRepository implements PetRepository {
         log.info("[finish] PetRepository - findAll");
         return pets;
     }
+
+    @Override
+    public PetEntity findPet(UUID petId) {
+        log.info("[start] PetRepository - findPet");
+        PetEntity pet = repository.findById(petId)
+                .orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Pet not found"));
+        log.info("[finish] PetRepository - findPet");
+        return pet;
+    }
+
+    @Override
+    public void deletePet(UUID petId) {
+        log.info("[start] PetRepository - deletePet");
+        repository.deleteById(petId);
+        log.info("[finish] PetRepository - deletePet");
+    }
 }

@@ -13,6 +13,8 @@ public interface ClientMapper {
     ClientEntity toEntity(ClientRequest clientRequest);
 
     @Mapping(target = "clientId", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromRequest(ClientUpdateRequest request, @MappingTarget ClientEntity clientEntity);
 

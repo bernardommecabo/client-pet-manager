@@ -1,4 +1,4 @@
-package br.com.petz.clientpet.pet.application.DTOs;
+package br.com.petz.clientpet.pet.application.DTOs.responses;
 
 import br.com.petz.clientpet.pet.domain.PetType;
 
