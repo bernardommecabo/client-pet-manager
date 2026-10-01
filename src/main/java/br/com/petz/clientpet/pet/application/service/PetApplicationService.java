@@ -11,13 +11,15 @@ import br.com.petz.clientpet.pet.application.DTOs.requests.PetRequest;
 import br.com.petz.clientpet.pet.application.mapper.PetMapper;
 import br.com.petz.clientpet.pet.domain.PetEntity;
 import br.com.petz.clientpet.pet.domain.repository.PetRepository;
+import br.com.petz.clientpet.utils.DTOs.PageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -43,14 +45,16 @@ public class PetApplicationService implements PetService {
 
     @Override
     @Transactional
-    public List<PetListResponse> findAllPetsFromClient(UUID clientId) {
+    public PageResponse<PetListResponse> findAllPetsFromClient(UUID clientId, Pageable pageable) {
         log.info("[start] PetApplicationService - findAllPetsFromClient");
+
         clientRepository.findClient(clientId);
-        List<PetEntity> pets = petRepository.findAll(clientId);
+
+        Page<PetEntity> pets = petRepository.findAll(clientId,pageable);
+        Page<PetListResponse> response = pets.map(petMapper::toListResponse);
+
         log.info("[finish] PetApplicationService - findAllPetsFromClient");
-        return pets.stream()
-                .map(petMapper::toListResponse)
-                .toList();
+        return PageResponse.from(response);
     }
 
     @Override

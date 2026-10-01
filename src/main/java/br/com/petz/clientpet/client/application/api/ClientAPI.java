@@ -5,11 +5,13 @@ import br.com.petz.clientpet.client.application.DTOs.responses.ClientInfoRespons
 import br.com.petz.clientpet.client.application.DTOs.responses.ClientListResponse;
 import br.com.petz.clientpet.client.application.DTOs.requests.ClientRequest;
 import br.com.petz.clientpet.client.application.DTOs.responses.ClientResponse;
+import br.com.petz.clientpet.utils.DTOs.PageResponse;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -25,7 +27,7 @@ public interface ClientAPI {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<ClientListResponse> getAllClients();
+    PageResponse<ClientListResponse> getAllClients(@PageableDefault(size = 10, sort = "createdAt") Pageable pageable);
 
     @PatchMapping("/{clientId}")
     @ResponseStatus(HttpStatus.OK)
