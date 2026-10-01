@@ -6,11 +6,12 @@ import br.com.petz.clientpet.client.application.DTOs.responses.ClientListRespons
 import br.com.petz.clientpet.client.application.DTOs.requests.ClientRequest;
 import br.com.petz.clientpet.client.application.DTOs.responses.ClientResponse;
 import br.com.petz.clientpet.client.application.service.ClientService;
+import br.com.petz.clientpet.utils.DTOs.PageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -36,9 +37,9 @@ public class ClientController implements ClientAPI {
     }
 
     @Override
-    public List<ClientListResponse> getAllClients() {
+    public PageResponse<ClientListResponse> getAllClients(Pageable pageable) {
         log.info("[start] ClientController - getAllClients");
-        List<ClientListResponse> responses = clientService.getAllClients();
+        PageResponse<ClientListResponse> responses = clientService.getAllClients(pageable);
         log.info("[finish] ClientController - getAllClients");
         return responses;
     }

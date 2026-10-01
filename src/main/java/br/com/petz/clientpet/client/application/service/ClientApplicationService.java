@@ -8,11 +8,13 @@ import br.com.petz.clientpet.client.application.DTOs.responses.ClientResponse;
 import br.com.petz.clientpet.client.application.mapper.ClientMapper;
 import br.com.petz.clientpet.client.domain.ClientEntity;
 import br.com.petz.clientpet.client.domain.repository.ClientRepository;
+import br.com.petz.clientpet.utils.DTOs.PageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -39,13 +41,14 @@ public class ClientApplicationService implements ClientService {
     }
 
     @Override
-    public List<ClientListResponse> getAllClients() {
+    public PageResponse<ClientListResponse> getAllClients(Pageable pageable) {
         log.info("[start] ClientService - getClientsList");
-        List<ClientEntity> clients = clientRepository.findAllClients();
+
+        Page<ClientEntity> clients = clientRepository.findAllClients(pageable);
+        Page<ClientListResponse> response = clients.map(clientMapper::toListResponse);
+
         log.info("[finish] ClientService - getClientsList");
-        return clients.stream()
-                .map(clientMapper::toListResponse)
-                .toList();
+        return PageResponse.from(response);
     }
 
     @Override

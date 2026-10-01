@@ -6,10 +6,11 @@ import br.com.petz.clientpet.pet.domain.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -31,9 +32,9 @@ public class PetInfraRepository implements PetRepository {
     }
 
     @Override
-    public List<PetEntity> findAll(UUID clientId) {
+    public Page<PetEntity> findAll(UUID clientId, Pageable pageable) {
         log.info("[start] PetRepository - findAll");
-        List<PetEntity> pets = repository.findAllByClient_ClientId(clientId);
+        Page<PetEntity> pets = repository.findAllByClient_ClientId(clientId,pageable);
         log.info("[finish] PetRepository - findAll");
         return pets;
     }

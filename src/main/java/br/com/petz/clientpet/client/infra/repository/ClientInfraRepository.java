@@ -6,10 +6,11 @@ import br.com.petz.clientpet.handlers.exceptions.APIException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -31,9 +32,9 @@ public class ClientInfraRepository implements ClientRepository {
     }
 
     @Override
-    public List<ClientEntity> findAllClients() {
+    public Page<ClientEntity> findAllClients(Pageable pageable) {
         log.info("[start] ClientRepository - findAllClients");
-        List<ClientEntity> clientsList = repository.findAll();
+        Page<ClientEntity> clientsList = repository.findAll(pageable);
         log.info("[finish] ClientRepository - findAllClients");
         return clientsList;
     }

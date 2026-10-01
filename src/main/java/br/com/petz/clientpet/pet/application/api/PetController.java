@@ -6,11 +6,12 @@ import br.com.petz.clientpet.pet.application.DTOs.responses.PetListResponse;
 import br.com.petz.clientpet.pet.application.DTOs.requests.PetRequest;
 import br.com.petz.clientpet.pet.application.DTOs.responses.PetResponse;
 import br.com.petz.clientpet.pet.application.service.PetService;
+import br.com.petz.clientpet.utils.DTOs.PageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -36,9 +37,9 @@ public class PetController implements PetAPI {
     }
 
     @Override
-    public List<PetListResponse> getPetsListFromClientId(UUID clientId) {
+    public PageResponse<PetListResponse> getPetsListFromClientId(UUID clientId, Pageable pageable) {
         log.info("[start] PetController - getPetsListFromClientId");
-        List<PetListResponse> responses = petService.findAllPetsFromClient(clientId);
+        PageResponse<PetListResponse> responses = petService.findAllPetsFromClient(clientId,pageable);
         log.info("[finish] PetController - getPetsListFromClientId");
         return responses;
     }
