@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PetSpringDataJpaRepository extends JpaRepository<PetEntity, UUID> {
-    List<PetEntity> findAllByClientId(UUID clientId);
+    List<PetEntity> findAllByClient_ClientId(UUID clientId);
 }

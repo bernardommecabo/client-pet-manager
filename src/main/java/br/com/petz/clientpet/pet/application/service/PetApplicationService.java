@@ -1,5 +1,6 @@
 package br.com.petz.clientpet.pet.application.service;
 
+import br.com.petz.clientpet.client.domain.ClientEntity;
 import br.com.petz.clientpet.client.domain.repository.ClientRepository;
 import br.com.petz.clientpet.handlers.exceptions.APIException;
 import br.com.petz.clientpet.pet.application.DTOs.requests.PetUpdateRequest;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,11 +29,12 @@ public class PetApplicationService implements PetService {
     private final ClientRepository clientRepository;
 
     @Override
+    @Transactional
     public PetResponse createPet(UUID clientId, PetRequest request) {
         log.info("[start] PetApplicationService - createPet");
-        clientRepository.findClient(clientId);
+        ClientEntity client = clientRepository.findClient(clientId);
 
-        PetEntity pet = petMapper.toEntity(request,clientId);
+        PetEntity pet = petMapper.toEntity(request,client);
         PetEntity savedPet = petRepository.savePet(pet);
 
         log.info("[finish] PetApplicationService - createPet");
@@ -39,6 +42,7 @@ public class PetApplicationService implements PetService {
     }
 
     @Override
+    @Transactional
     public List<PetListResponse> findAllPetsFromClient(UUID clientId) {
         log.info("[start] PetApplicationService - findAllPetsFromClient");
         clientRepository.findClient(clientId);
@@ -50,6 +54,7 @@ public class PetApplicationService implements PetService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PetInfoResponse findPetInfo(UUID clientId, UUID petId) {
         log.info("[start] PetApplicationService - findPetInfo");
         PetEntity pet = findPetOrThrow(clientId,petId);
@@ -58,6 +63,7 @@ public class PetApplicationService implements PetService {
     }
 
     @Override
+    @Transactional
     public void deletePet(UUID clientId, UUID petId) {
         log.info("[start] PetApplicationService - deletePet");
         PetEntity pet = findPetOrThrow(clientId,petId);
@@ -66,6 +72,7 @@ public class PetApplicationService implements PetService {
     }
 
     @Override
+    @Transactional
     public void updatePet(UUID clientId, UUID petId, PetUpdateRequest request) {
         log.info("[start] PetApplicationService - updatePet");
         PetEntity pet = findPetOrThrow(clientId,petId);
@@ -75,7 +82,7 @@ public class PetApplicationService implements PetService {
     }
 
     private void validateOwnership(UUID clientId, PetEntity pet) {
-        if(!pet.getClientId().equals(clientId)){
+        if(!pet.getClient().getClientId().equals(clientId)){
             throw APIException.build(HttpStatus.NOT_FOUND,"Pet not found for this client");
         }
     }

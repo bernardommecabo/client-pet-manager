@@ -1,5 +1,6 @@
 package br.com.petz.clientpet.pet.domain;
 
+import br.com.petz.clientpet.client.domain.ClientEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,8 +23,9 @@ public class PetEntity {
     @Column(columnDefinition = "uuid", nullable = false, updatable = false)
     private UUID petId;
 
-    @Column(name = "clientId", nullable = false, updatable = false)
-    private UUID clientId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "clientId", nullable = false, updatable = false)
+    private ClientEntity client;
 
     @NotBlank
     @Setter

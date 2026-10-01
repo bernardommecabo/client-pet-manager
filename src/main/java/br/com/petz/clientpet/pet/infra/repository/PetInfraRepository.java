@@ -33,7 +33,7 @@ public class PetInfraRepository implements PetRepository {
     @Override
     public List<PetEntity> findAll(UUID clientId) {
         log.info("[start] PetRepository - findAll");
-        List<PetEntity> pets = repository.findAllByClientId(clientId);
+        List<PetEntity> pets = repository.findAllByClient_ClientId(clientId);
         log.info("[finish] PetRepository - findAll");
         return pets;
     }
