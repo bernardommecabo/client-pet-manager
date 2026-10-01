@@ -1,5 +1,6 @@
 package br.com.petz.clientpet.client.domain;
 
+import br.com.petz.clientpet.pet.domain.PetEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -9,6 +10,8 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -21,6 +24,9 @@ public class ClientEntity {
     @GeneratedValue
     @Column(columnDefinition = "uuid", nullable = false, updatable = false)
     private UUID clientId;
+
+    @OneToMany(mappedBy = "client",  cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<PetEntity> pets = new ArrayList<>();
 
     @NotBlank
     @Setter
