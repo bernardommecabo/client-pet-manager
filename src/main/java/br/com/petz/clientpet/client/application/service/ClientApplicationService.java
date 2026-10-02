@@ -1,5 +1,6 @@
 package br.com.petz.clientpet.client.application.service;
 
+import br.com.petz.clientpet.auth.user.domain.repository.UserRepository;
 import br.com.petz.clientpet.client.application.DTOs.requests.ClientUpdateRequest;
 import br.com.petz.clientpet.client.application.DTOs.responses.ClientInfoResponse;
 import br.com.petz.clientpet.client.application.DTOs.responses.ClientListResponse;
@@ -8,12 +9,15 @@ import br.com.petz.clientpet.client.application.DTOs.responses.ClientResponse;
 import br.com.petz.clientpet.client.application.mapper.ClientMapper;
 import br.com.petz.clientpet.client.domain.ClientEntity;
 import br.com.petz.clientpet.client.domain.repository.ClientRepository;
+import br.com.petz.clientpet.handlers.exceptions.APIException;
 import br.com.petz.clientpet.utils.DTOs.PageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -22,6 +26,7 @@ import java.util.UUID;
 @Log4j2
 public class ClientApplicationService implements ClientService {
     private final ClientRepository clientRepository;
+    private final UserRepository userRepository;
     private final ClientMapper clientMapper;
 
     @Override
@@ -61,9 +66,13 @@ public class ClientApplicationService implements ClientService {
     }
 
     @Override
+    @Transactional
     public void deleteClientEntity(UUID clientId) {
         log.info("[start] ClientService - deleteClientEntity");
         ClientEntity client = clientRepository.findClient(clientId);
+        if (userRepository.existsByClientId(clientId)){
+            throw APIException.build(HttpStatus.CONFLICT,"Cannot delete client with active user account");
+        }
         clientRepository.deleteClient(client.getClientId());
         log.info("[finish] ClientService - deleteClientEntity");
     }

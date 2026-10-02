@@ -8,4 +8,6 @@ public interface UserRepository {
     UserEntity saveUser(UserEntity user);
 
     UserEntity findById(UUID userId);
+
+    boolean existsByClientId(UUID clientId);
 }

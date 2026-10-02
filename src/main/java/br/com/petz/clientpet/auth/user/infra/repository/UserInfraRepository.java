@@ -31,4 +31,12 @@ public class UserInfraRepository implements UserRepository {
         log.info("[finish] UserRepository - findById");
         return savedUser;
     }
+
+    @Override
+    public boolean existsByClientId(UUID clientId) {
+        log.info("[start] UserRepository - existsByClientId");
+        boolean exists = repository.existsByClient_ClientId(clientId);
+        log.info("[finish] UserRepository - existsByClientId");
+        return exists;
+    }
 }
